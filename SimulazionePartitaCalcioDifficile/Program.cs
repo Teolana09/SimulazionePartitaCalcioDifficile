@@ -2,13 +2,22 @@
 {
     internal class Program
     {
+        static void incremetoPuntiGiocatore(int[] squadra, int puntiDaAggiungere = 2)
+        {
+            for (int i = 0; i < squadra.Length; i++)
+            {
+                squadra[i] += puntiDaAggiungere;
+            }
+            //esegue l'incremento dei punti del giocatore selezionato
+               
+        }
         static int Somma(int[] squadra)
         {
             int somma = 0;
 
             for (int i = 0; i < squadra.Length; i++)//esegue la somma della squadraB
             {
-                somma = +squadra[i] + somma;
+                somma = squadra[i] + somma;
             }
             return somma;
         }
@@ -81,17 +90,20 @@
 
             //SOMMA DELLA SQUADRA B
             int sommaSquadraB = Somma(squadraB);
+            //somma totale
             int sommaTot = sommaSquadraA + sommaSquadraB;
             int golSquadra = 0;
             int punteggioFinaleA = 0;
             int punteggioFinaleB = 0;
-
-            //se hanno fatto gol
-            Random rnd = new Random();
-            int limiti = rnd.Next(0, 100);
-            bool gol = false;
-            for (int i = 0; i < 90; i++)
+            int recupero = 0;
+            //inizio partita
+            for (int minuti = 0; minuti < 90 + recupero; minuti++)
             {
+                //se hanno fatto gol
+                Random rnd = new Random();
+                int limiti = rnd.Next(0, 100);
+                bool gol = false;
+                Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
                 if (limiti < 2)
                 {
                     gol = true;
@@ -103,17 +115,27 @@
                         {
                             Console.WriteLine("HA SEGNATO LA SQUADRA A");
                             punteggioFinaleA++;
+                            incremetoPuntiGiocatore(squadraA, 3);
+                            stampaGiocatori(squadraA);
                         }
                         else
                         {
                             Console.WriteLine("HA SEGNATO LA SQUADRA B");
                             punteggioFinaleB++;
+                            incremetoPuntiGiocatore(squadraB, 3);
+                            stampaGiocatori(squadraB);
                         }
-
+                        
                     }
                 }
-            }
-
+                if (minuti == 89 )
+                {
+                    Random rnd3 = new Random();
+                    recupero = rnd3.Next(1, 5);
+                    
+                }
+            } 
+            Console.WriteLine("IL RISULTATO FINALE E' " + punteggioFinaleA + " - " + punteggioFinaleB);
         }
     }
 }
