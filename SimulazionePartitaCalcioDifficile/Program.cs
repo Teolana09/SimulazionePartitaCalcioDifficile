@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        static void incremetoPuntiGiocatore(int[] squadra, int puntiDaAggiungere = 2)
+        static void incremetoPuntiGiocatore(int[] squadra, int puntiDaAggiungere)
         {
             for (int i = 0; i < squadra.Length; i++)
             {
@@ -26,7 +26,7 @@
             Random random = new Random(); //assegnazione del valore
             for (int i = 0; i < squadra.Length; i++)//for per i valori
             {
-                int punteggio = random.Next(1, 100);
+                int punteggio = random.Next(30, 100);
                 squadra[i] = punteggio;
 
             }
@@ -96,44 +96,56 @@
             int punteggioFinaleA = 0;
             int punteggioFinaleB = 0;
             int recupero = 0;
+            int eventi = 0;
+
             //inizio partita
             for (int minuti = 0; minuti < 90 + recupero; minuti++)
             {
-                //se hanno fatto gol
-                Random rnd = new Random();
-                int limiti = rnd.Next(0, 100);
-                bool gol = false;
-                Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
-                if (limiti < 2)
+                Random evento = new Random();//possibili eventi
+                eventi = evento.Next(1, 7);
+
+                if (eventi == 0)
                 {
-                    gol = true;
-                    if (gol == true)
+
+                    //se hanno fatto gol
+                    Random rnd = new Random();
+                    int limiti = rnd.Next(0, 100);
+                    bool gol = false;
+                    Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
+                    if (limiti < 2)
                     {
-                        Random rnd2 = new Random();
-                        golSquadra = rnd2.Next(0, sommaTot);
-                        if (golSquadra <= sommaSquadraA)
+                        gol = true;
+                        if (gol == true)
                         {
-                            Console.WriteLine("HA SEGNATO LA SQUADRA A");
-                            punteggioFinaleA++;
-                            incremetoPuntiGiocatore(squadraA, 3);
-                            stampaGiocatori(squadraA);
+                            Random rnd2 = new Random();
+                            golSquadra = rnd2.Next(0, sommaTot);
+                            if (golSquadra <= sommaSquadraA)
+                            {
+                                Console.WriteLine("HA SEGNATO LA SQUADRA A");
+                                punteggioFinaleA++;
+                                incremetoPuntiGiocatore(squadraA, 3);
+                                stampaGiocatori(squadraA);
+                            }
+                            else
+                            {
+                                Console.WriteLine("HA SEGNATO LA SQUADRA B");
+                                punteggioFinaleB++;
+                                incremetoPuntiGiocatore(squadraB, 3);
+                                stampaGiocatori(squadraB);
+                            }
+
                         }
-                        else
-                        {
-                            Console.WriteLine("HA SEGNATO LA SQUADRA B");
-                            punteggioFinaleB++;
-                            incremetoPuntiGiocatore(squadraB, 3);
-                            stampaGiocatori(squadraB);
-                        }
-                        
                     }
+                    if (minuti == 89)
+                    {
+                        Random rnd3 = new Random();
+                        recupero = rnd3.Next(1, 5);
+
+                    }
+
                 }
-                if (minuti == 89 )
-                {
-                    Random rnd3 = new Random();
-                    recupero = rnd3.Next(1, 5);
-                    
-                }
+
+                
             } 
             Console.WriteLine("IL RISULTATO FINALE E' " + punteggioFinaleA + " - " + punteggioFinaleB);
         }
