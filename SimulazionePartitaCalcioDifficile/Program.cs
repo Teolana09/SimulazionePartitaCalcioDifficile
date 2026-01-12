@@ -102,7 +102,7 @@
             for (int minuti = 0; minuti < 90 + recupero; minuti++)
             {
                 Random evento = new Random();//possibili eventi
-                eventi = evento.Next(1, 7);
+                eventi = evento.Next(1, 8);
 
                 if (eventi == 0)
                 {
