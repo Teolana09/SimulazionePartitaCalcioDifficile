@@ -101,55 +101,137 @@
             //inizio partita
             for (int minuti = 0; minuti < 90 + recupero; minuti++)
             {
-                Random evento = new Random();//possibili eventi
-                eventi = evento.Next(1, 8);
+                
 
-                if (eventi == 0)
+                Random EventoNUllo = new Random();
+                int eventoNullo = EventoNUllo.Next(0, 100);
+                if (eventoNullo < 50)
                 {
-
-                    //se hanno fatto gol
-                    Random rnd = new Random();
-                    int limiti = rnd.Next(0, 100);
-                    bool gol = false;
-                    Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
-                    if (limiti < 2)
+                    Random evento = new Random();//possibili eventi
+                    eventi = evento.Next(0, 7);
+                    if (eventi == 0)
                     {
-                        gol = true;
-                        if (gol == true)
+
+                        //se hanno fatto gol
+                        Random rnd = new Random();
+                        int limiti = rnd.Next(0, 100);
+                        bool gol = false;                       
+                        if (limiti < 2)
                         {
-                            Random rnd2 = new Random();
-                            golSquadra = rnd2.Next(0, sommaTot);
-                            if (golSquadra <= sommaSquadraA)
-                            {
-                                Console.WriteLine("HA SEGNATO LA SQUADRA A");
-                                punteggioFinaleA++;
-                                incremetoPuntiGiocatore(squadraA, 3);
-                                stampaGiocatori(squadraA);
-                            }
-                            else
-                            {
-                                Console.WriteLine("HA SEGNATO LA SQUADRA B");
-                                punteggioFinaleB++;
-                                incremetoPuntiGiocatore(squadraB, 3);
-                                stampaGiocatori(squadraB);
-                            }
+                            gol = true;
+                            
+                            
+                                Random rnd2 = new Random();
+                                golSquadra = rnd2.Next(0, sommaTot);
+                                if (golSquadra <= sommaSquadraA)
+                                {
+                                    Console.WriteLine("HA SEGNATO LA SQUADRA A");
+                                    punteggioFinaleA++;
+                                    incremetoPuntiGiocatore(squadraA, 3);
+                                    stampaGiocatori(squadraA);//da togliere alla fine***-
+                                }
+                                else
+                                {
+                                    Console.WriteLine("HA SEGNATO LA SQUADRA B");
+                                    punteggioFinaleB++;
+                                    incremetoPuntiGiocatore(squadraB, 3);
+                                    stampaGiocatori(squadraB);//da togliere alla fine***-
+                                }
 
                         }
+                        
+                        if (minuti == 89)
+                        {
+                            Random rnd3 = new Random();
+                            recupero = rnd3.Next(1, 5);
+
+                        }
+
                     }
-                    if (minuti == 89)
+                    if (eventi == 1)
                     {
-                        Random rnd3 = new Random();
-                        recupero = rnd3.Next(1, 5);
+                        int ammonizioniGiocatori = 0;
+                        Random giallo = new Random();
+                        int giocatoreAmmonito = giallo.Next(0, 10);
+                        for (int i = 0; i < 10; i++)//ciclo per trovare il giocatore ammonito SquadraA
+                        {
+                            if (giocatoreAmmonito == i)
+                            {
+                                Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
+                                Console.WriteLine("IL GIOCATORE " + i + " DELLA SQUADRA A E' STATO AMMONITO");
+                                squadraA[i] -= 5;
+                                stampaGiocatori(squadraA);//da togliere alla fine***-
+                                squadraA[i] = ammonizioniGiocatori++;
+                            }
+                            if (ammonizioniGiocatori == 2)
+                            {
+                                Console.WriteLine("IL GIOCATORE " + i + " DELLA SQUADRA A E' STATO ESPULSO PER DOPPIA AMMONIZIONE");
+                                squadraA[i] = 0;
+                                stampaGiocatori(squadraA);//da togliere alla fine***-
+                            }
+
+
+                        }
+                        for (int i = 0; i < 10; i++)
+                        {
+
+                            if (giocatoreAmmonito == i)
+                            {
+                                Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
+                                Console.WriteLine("IL GIOCATORE " + i + " DELLA SQUADRA B E' STATO AMMONITO");
+                                squadraB[i] -= 5;
+                                stampaGiocatori(squadraB);//da togliere alla fine***-
+                                squadraB[i] = ammonizioniGiocatori++;
+                            }
+                            if (ammonizioniGiocatori == 2)
+                            {
+                                Console.WriteLine("IL GIOCATORE " + i + " DELLA SQUADRA B E' STATO ESPULSO PER DOPPIA AMMONIZIONE");
+                                squadraB[i] = 0;
+                                stampaGiocatori(squadraB);//da togliere alla fine***-
+                            }
+                        }
 
                     }
+                    if (eventi == 2)
+                    {
 
+                        Random rosso = new Random();
+                        int giocatoreEspulso = rosso.Next(0, 10);
+                        for (int i = 0; i < 10; i++)//ciclo per trovare il giocatore espulso SquadraA
+                        {
+                            if (giocatoreEspulso == i)
+                            {
+                                Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
+                                Console.WriteLine("IL GIOCATORE " + i + " DELLA SQUADRA A E' STATO ESPULSO");
+                                squadraA[i] = 0;
+                                stampaGiocatori(squadraA);//da togliere alla fine***-
+
+                            }
+
+
+                        }
+                        for (int i = 0; i < 10; i++)
+                        {
+                            if (giocatoreEspulso == i)
+                            {
+                                Console.WriteLine("MINUTO " + (minuti + 1));//stampa il minutaggio
+                                Console.WriteLine("IL GIOCATORE " + i + " DELLA SQUADRA B E' STATO ESPULSO");
+                                squadraB[i] = 0;
+                                stampaGiocatori(squadraB);//da togliere alla fine***-
+                            }
+                        }
+
+
+                    }
                 }
+                Console.WriteLine("NON E' SUCCESSO NESSUN EVENTO AL MINUTO " + (minuti + 1));
 
-                
-            } 
+               
+            }
             Console.WriteLine("IL RISULTATO FINALE E' " + punteggioFinaleA + " - " + punteggioFinaleB);
         }
     }
+
 }
-    
+
 
